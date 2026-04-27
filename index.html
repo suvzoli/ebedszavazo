@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <title>🍽️ Ebédszavazó</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root{
+      --korona:#ef4444;
+      --turul:#22c55e;
+      --nmo:#3b82f6;
+      --mokka:#92400e;
+      --hazai:#a855f7;
+    }
+
+    body{margin:0;font-family:system-ui;background:#f1f5f9;color:#0f172a}
+    .app{max-width:1200px;margin:auto;padding:24px}
+    .muted{color:#64748b;font-size:14px}
+
+    .tabs{display:flex;gap:12px;margin:16px 0}
+    .tabs button{padding:10px 18px;border-radius:999px;border:0;background:#e2e8f0;font-weight:700;cursor:pointer}
+    .tabs button.active{background:#0ea5e9;color:#fff}
+
+    .tab{display:none}.tab.active{display:block}
+    .grid{display:grid;grid-template-columns:2fr 1fr;gap:24px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+
+    .card{background:#fff;border-radius:18px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+    input,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid #cbd5e1;margin-top:6px}
+
+    button{margin-top:10px;padding:10px 14px;border-radius:12px;border:0;font-weight:800;color:#fff;cursor:pointer}
+
+    .vote-korona{background:var(--korona)}
+    .vote-turul{background:var(--turul)}
+    .vote-nmo{background:var(--nmo)}
+    .vote-mokka{background:var(--mokka)}
+    .vote-hazai{background:var(--hazai)}
+
+    .menu-card{border-left:6px solid;padding:16px;border-radius:16px;margin-bottom:16px;background:#f8fafc}
+    .menu-card.voted{opacity:.45}
+
+    .ranking-item,.message{padding:6px 0;border-bottom:1px solid #e5e7eb}
+    .admin-row{border-bottom:1px solid #e5e7eb;padding:10px 0}
+
+    .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:13px;font-weight:800}
+    .badge.open{background:#dcfce7;color:#166534}
+    .badge.closed{background:#fee2e2;color:#991b1b}
+  </style>
+</head>
+
+<body>
+<div class="app">
+
+<h1>🍽️ Ebédszavazó</h1>
+<p class="muted">
+  <span id="todayDate"></span> •
+  <span id="voteStatus" class="badge"></span>
+</p>
+
+<div class="tabs">
+  <button id="tabVoteBtn" class="active">Szavazás</button>
+  <button id="tabAdminBtn">Admin</button>
+</div>
+
+<div id="voteTab" class="tab active">
+  <div class="grid">
+
+    <div class="card">
+      <h3>🍲 Mai menük</h3>
+      <input id="nameInput" placeholder="Neved">
+      <p id="votedInfo" class="muted"></p>
+      <div id="todayMenu"></div>
+    </div>
+
+    <div class="card">
+      <h3>📊 Eredmény</h3>
+      <div id="liveRanking"></div>
+
+      <h4>👀 Ki mire szavazott</h4>
+      <div id="voteList"></div>
+
+      <hr>
+      <h3>🍔 BélHangok™</h3>
+      <div id="messages"></div>
+      <textarea id="messageInput"></textarea>
+      <button id="sendMessageBtn" class="vote-korona">Küldés</button>
+
+      <hr>
+      <h3>🤣 Napi Favicc</h3>
+      <div id="dailyJoke" class="muted"></div>
+    </div>
+
+  </div>
+</div>
+
+<div id="adminTab" class="tab">
+  <div class="card" style="max-width:700px">
+
+    <h3>Admin</h3>
+    <input id="adminPassword" type="password" placeholder="Jelszó">
+    <button id="adminLoginBtn" class="vote-nmo">Belépés</button>
+    <p id="adminStatus" class="muted"></p>
+
+    <div id="adminPanel" style="display:none">
+
+      <button id="toggleVotingBtn" class="vote-mokka">
+        Szavazás nyitása / lezárása
+      </button>
+
+      <hr>
+      <h4>🍲 Napi menük</h4>
+      <div id="adminMenus"></div>
+
+      <hr>
+      <h4>🗳️ Szavazatok (admin)</h4>
+      <div id="adminVotes"></div>
+
+      <hr>
+      <h4>💬 Chat moderálás</h4>
+      <div id="adminMessages"></div>
+
+      <hr>
+      <h4>🤣 Napi favicc</h4>
+      <textarea id="adminJokeText"></textarea>
+      <button id="saveJokeBtn" class="vote-hazai">Mai vicc mentése</button>
+
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
